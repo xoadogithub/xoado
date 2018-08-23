@@ -37,5 +37,6 @@ public class XoadoGetLog {
 	
 	public static void main(String[] args) {
 //		aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+//		aaaaaaaaaaaa
 	}
 }
