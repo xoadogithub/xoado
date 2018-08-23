@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.authcenter.mapper.TblOrganizeMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.authcenter.bean.TblOrganize" >
+    <id column="organizeId" property="organizeid" jdbcType="VARCHAR" />
+    <result column="organize_name" property="organizeName" jdbcType="VARCHAR" />
+    <result column="createrId" property="createrid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="orgtype" property="orgtype" jdbcType="CHAR" />
+    <result column="orgstatus" property="orgstatus" jdbcType="CHAR" />
+    <result column="scode" property="scode" jdbcType="VARCHAR" />
+    <result column="USCI" property="usci" jdbcType="VARCHAR" />
+    <result column="Business_license_img_url" property="businessLicenseImgUrl" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="audit_Time" property="auditTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    organizeId, organize_name, createrId, create_time, logo_url, address, telephone, 
+    orgtype, orgstatus, scode, USCI, Business_license_img_url, message, audit_Time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.authcenter.bean.TblOrganizeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_organize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_organize
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_organize
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.authcenter.bean.TblOrganizeExample" >
+    delete from tbl_organize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.authcenter.bean.TblOrganize" >
+    insert into tbl_organize (organizeId, organize_name, createrId, 
+      create_time, logo_url, address, 
+      telephone, orgtype, orgstatus, 
+      scode, USCI, Business_license_img_url, 
+      message, audit_Time)
+    values (#{organizeid,jdbcType=VARCHAR}, #{organizeName,jdbcType=VARCHAR}, #{createrid,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{logoUrl,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{orgtype,jdbcType=CHAR}, #{orgstatus,jdbcType=CHAR}, 
+      #{scode,jdbcType=VARCHAR}, #{usci,jdbcType=VARCHAR}, #{businessLicenseImgUrl,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.authcenter.bean.TblOrganize" >
+    insert into tbl_organize
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="organizeid != null" >
+        organizeId,
+      </if>
+      <if test="organizeName != null" >
+        organize_name,
+      </if>
+      <if test="createrid != null" >
+        createrId,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="orgtype != null" >
+        orgtype,
+      </if>
+      <if test="orgstatus != null" >
+        orgstatus,
+      </if>
+      <if test="scode != null" >
+        scode,
+      </if>
+      <if test="usci != null" >
+        USCI,
+      </if>
+      <if test="businessLicenseImgUrl != null" >
+        Business_license_img_url,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="auditTime != null" >
+        audit_Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="organizeid != null" >
+        #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeName != null" >
+        #{organizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createrid != null" >
+        #{createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="orgtype != null" >
+        #{orgtype,jdbcType=CHAR},
+      </if>
+      <if test="orgstatus != null" >
+        #{orgstatus,jdbcType=CHAR},
+      </if>
+      <if test="scode != null" >
+        #{scode,jdbcType=VARCHAR},
+      </if>
+      <if test="usci != null" >
+        #{usci,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImgUrl != null" >
+        #{businessLicenseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.authcenter.bean.TblOrganizeExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_organize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_organize
+    <set >
+      <if test="record.organizeid != null" >
+        organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizeName != null" >
+        organize_name = #{record.organizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createrid != null" >
+        createrId = #{record.createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logoUrl != null" >
+        logo_url = #{record.logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgtype != null" >
+        orgtype = #{record.orgtype,jdbcType=CHAR},
+      </if>
+      <if test="record.orgstatus != null" >
+        orgstatus = #{record.orgstatus,jdbcType=CHAR},
+      </if>
+      <if test="record.scode != null" >
+        scode = #{record.scode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usci != null" >
+        USCI = #{record.usci,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicenseImgUrl != null" >
+        Business_license_img_url = #{record.businessLicenseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        audit_Time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_organize
+    set organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      organize_name = #{record.organizeName,jdbcType=VARCHAR},
+      createrId = #{record.createrid,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      logo_url = #{record.logoUrl,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      orgtype = #{record.orgtype,jdbcType=CHAR},
+      orgstatus = #{record.orgstatus,jdbcType=CHAR},
+      scode = #{record.scode,jdbcType=VARCHAR},
+      USCI = #{record.usci,jdbcType=VARCHAR},
+      Business_license_img_url = #{record.businessLicenseImgUrl,jdbcType=VARCHAR},
+      message = #{record.message,jdbcType=VARCHAR},
+      audit_Time = #{record.auditTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.authcenter.bean.TblOrganize" >
+    update tbl_organize
+    <set >
+      <if test="organizeName != null" >
+        organize_name = #{organizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createrid != null" >
+        createrId = #{createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="orgtype != null" >
+        orgtype = #{orgtype,jdbcType=CHAR},
+      </if>
+      <if test="orgstatus != null" >
+        orgstatus = #{orgstatus,jdbcType=CHAR},
+      </if>
+      <if test="scode != null" >
+        scode = #{scode,jdbcType=VARCHAR},
+      </if>
+      <if test="usci != null" >
+        USCI = #{usci,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseImgUrl != null" >
+        Business_license_img_url = #{businessLicenseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_Time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.authcenter.bean.TblOrganize" >
+    update tbl_organize
+    set organize_name = #{organizeName,jdbcType=VARCHAR},
+      createrId = #{createrid,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      orgtype = #{orgtype,jdbcType=CHAR},
+      orgstatus = #{orgstatus,jdbcType=CHAR},
+      scode = #{scode,jdbcType=VARCHAR},
+      USCI = #{usci,jdbcType=VARCHAR},
+      Business_license_img_url = #{businessLicenseImgUrl,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      audit_Time = #{auditTime,jdbcType=TIMESTAMP}
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

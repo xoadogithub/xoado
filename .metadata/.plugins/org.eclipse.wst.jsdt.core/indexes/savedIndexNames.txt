@@ -1,0 +1,12 @@
+INDEX VERSION 1.3+G:\xiaoduoProject\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2154659501.index
+324516857.index
+2466352386.index
+2165645000.index
+532901939.index
+1465007937.index
+3344727865.index
+463676232.index
+195218722.index
+1539995075.index
+2991470926.index

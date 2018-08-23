@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.wx.mapper.TblComponentverifyticketMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.wx.bean.TblComponentverifyticket" >
+    <id column="WX3_app_id" property="wx3AppId" jdbcType="VARCHAR" />
+    <result column="ComponentVerifyTicket" property="componentverifyticket" jdbcType="VARCHAR" />
+    <result column="pre_auth_code" property="preAuthCode" jdbcType="VARCHAR" />
+    <result column="component_access_token" property="componentAccessToken" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WX3_app_id, ComponentVerifyTicket, pre_auth_code, component_access_token
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.wx.bean.TblComponentverifyticketExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_ComponentVerifyTicket
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ComponentVerifyTicket
+    where WX3_app_id = #{wx3AppId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_ComponentVerifyTicket
+    where WX3_app_id = #{wx3AppId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.wx.bean.TblComponentverifyticketExample" >
+    delete from tbl_ComponentVerifyTicket
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.wx.bean.TblComponentverifyticket" >
+    insert into tbl_ComponentVerifyTicket (WX3_app_id, ComponentVerifyTicket, 
+      pre_auth_code, component_access_token)
+    values (#{wx3AppId,jdbcType=VARCHAR}, #{componentverifyticket,jdbcType=VARCHAR}, 
+      #{preAuthCode,jdbcType=VARCHAR}, #{componentAccessToken,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.wx.bean.TblComponentverifyticket" >
+    insert into tbl_ComponentVerifyTicket
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wx3AppId != null" >
+        WX3_app_id,
+      </if>
+      <if test="componentverifyticket != null" >
+        ComponentVerifyTicket,
+      </if>
+      <if test="preAuthCode != null" >
+        pre_auth_code,
+      </if>
+      <if test="componentAccessToken != null" >
+        component_access_token,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wx3AppId != null" >
+        #{wx3AppId,jdbcType=VARCHAR},
+      </if>
+      <if test="componentverifyticket != null" >
+        #{componentverifyticket,jdbcType=VARCHAR},
+      </if>
+      <if test="preAuthCode != null" >
+        #{preAuthCode,jdbcType=VARCHAR},
+      </if>
+      <if test="componentAccessToken != null" >
+        #{componentAccessToken,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.wx.bean.TblComponentverifyticketExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_ComponentVerifyTicket
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_ComponentVerifyTicket
+    <set >
+      <if test="record.wx3AppId != null" >
+        WX3_app_id = #{record.wx3AppId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.componentverifyticket != null" >
+        ComponentVerifyTicket = #{record.componentverifyticket,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preAuthCode != null" >
+        pre_auth_code = #{record.preAuthCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.componentAccessToken != null" >
+        component_access_token = #{record.componentAccessToken,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_ComponentVerifyTicket
+    set WX3_app_id = #{record.wx3AppId,jdbcType=VARCHAR},
+      ComponentVerifyTicket = #{record.componentverifyticket,jdbcType=VARCHAR},
+      pre_auth_code = #{record.preAuthCode,jdbcType=VARCHAR},
+      component_access_token = #{record.componentAccessToken,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.wx.bean.TblComponentverifyticket" >
+    update tbl_ComponentVerifyTicket
+    <set >
+      <if test="componentverifyticket != null" >
+        ComponentVerifyTicket = #{componentverifyticket,jdbcType=VARCHAR},
+      </if>
+      <if test="preAuthCode != null" >
+        pre_auth_code = #{preAuthCode,jdbcType=VARCHAR},
+      </if>
+      <if test="componentAccessToken != null" >
+        component_access_token = #{componentAccessToken,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WX3_app_id = #{wx3AppId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.wx.bean.TblComponentverifyticket" >
+    update tbl_ComponentVerifyTicket
+    set ComponentVerifyTicket = #{componentverifyticket,jdbcType=VARCHAR},
+      pre_auth_code = #{preAuthCode,jdbcType=VARCHAR},
+      component_access_token = #{componentAccessToken,jdbcType=VARCHAR}
+    where WX3_app_id = #{wx3AppId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,30 @@
+package com.xoado.XDTools.mapper;
+
+import com.xoado.XDTools.bean.TblArchivesA;
+import com.xoado.XDTools.bean.TblArchivesExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface TblArchivesMapperA {
+    int countByExample(TblArchivesExample example);
+
+    int deleteByExample(TblArchivesExample example);
+
+    int deleteByPrimaryKey(String archiveId);
+
+    int insert(TblArchivesA record);
+
+    int insertSelective(TblArchivesA record);
+
+    List<TblArchivesA> selectByExample(TblArchivesExample example);
+
+    TblArchivesA selectByPrimaryKey(String archiveId);
+
+    int updateByExampleSelective(@Param("record") TblArchivesA record, @Param("example") TblArchivesExample example);
+
+    int updateByExample(@Param("record") TblArchivesA record, @Param("example") TblArchivesExample example);
+
+    int updateByPrimaryKeySelective(TblArchivesA record);
+
+    int updateByPrimaryKey(TblArchivesA record);
+}

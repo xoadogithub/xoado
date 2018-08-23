@@ -1,0 +1,5 @@
+package com.xoado.FilingCabinet.service;
+
+public interface IXDfileUpload {
+
+}

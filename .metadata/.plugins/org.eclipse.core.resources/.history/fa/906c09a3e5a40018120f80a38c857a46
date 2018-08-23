@@ -1,0 +1,7 @@
+package com.xoado.tools.service.impl;
+
+import com.xoado.tools.service.Iservice;
+
+public class ImplServicce implements Iservice{
+
+}

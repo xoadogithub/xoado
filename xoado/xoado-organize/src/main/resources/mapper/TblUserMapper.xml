@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.organize.mapper.TblUserMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.organize.bean.TblUser" >
+    <id column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="Phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="unionId" property="unionid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="Nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="User_password" property="userPassword" jdbcType="VARCHAR" />
+    <result column="Head_img_url" property="headImgUrl" jdbcType="VARCHAR" />
+    <result column="Register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="accounttype" property="accounttype" jdbcType="CHAR" />
+    <result column="accountstatus" property="accountstatus" jdbcType="CHAR" />
+    <result column="sex" property="sex" jdbcType="BIGINT" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="IdCard" property="idcard" jdbcType="VARCHAR" />
+    <result column="Positive_img_url" property="positiveImgUrl" jdbcType="VARCHAR" />
+    <result column="reverse_img_url" property="reverseImgUrl" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="audit_Time" property="auditTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userId, Phone_number, unionId, name, Nick_name, User_password, Head_img_url, Register_time, 
+    accounttype, accountstatus, sex, city, country, province, IdCard, Positive_img_url, 
+    reverse_img_url, message, audit_Time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.organize.bean.TblUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where userId = #{userid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_user
+    where userId = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.organize.bean.TblUserExample" >
+    delete from tbl_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.organize.bean.TblUser" >
+    insert into tbl_user (userId, Phone_number, unionId, 
+      name, Nick_name, User_password, 
+      Head_img_url, Register_time, accounttype, 
+      accountstatus, sex, city, 
+      country, province, IdCard, 
+      Positive_img_url, reverse_img_url, message, 
+      audit_Time)
+    values (#{userid,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{headImgUrl,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{accounttype,jdbcType=CHAR}, 
+      #{accountstatus,jdbcType=CHAR}, #{sex,jdbcType=BIGINT}, #{city,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{positiveImgUrl,jdbcType=VARCHAR}, #{reverseImgUrl,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.organize.bean.TblUser" >
+    insert into tbl_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="phoneNumber != null" >
+        Phone_number,
+      </if>
+      <if test="unionid != null" >
+        unionId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="nickName != null" >
+        Nick_name,
+      </if>
+      <if test="userPassword != null" >
+        User_password,
+      </if>
+      <if test="headImgUrl != null" >
+        Head_img_url,
+      </if>
+      <if test="registerTime != null" >
+        Register_time,
+      </if>
+      <if test="accounttype != null" >
+        accounttype,
+      </if>
+      <if test="accountstatus != null" >
+        accountstatus,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="idcard != null" >
+        IdCard,
+      </if>
+      <if test="positiveImgUrl != null" >
+        Positive_img_url,
+      </if>
+      <if test="reverseImgUrl != null" >
+        reverse_img_url,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="auditTime != null" >
+        audit_Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null" >
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accounttype != null" >
+        #{accounttype,jdbcType=CHAR},
+      </if>
+      <if test="accountstatus != null" >
+        #{accountstatus,jdbcType=CHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveImgUrl != null" >
+        #{positiveImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="reverseImgUrl != null" >
+        #{reverseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.organize.bean.TblUserExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_user
+    <set >
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        Phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionid != null" >
+        unionId = #{record.unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null" >
+        Nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        User_password = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headImgUrl != null" >
+        Head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerTime != null" >
+        Register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accounttype != null" >
+        accounttype = #{record.accounttype,jdbcType=CHAR},
+      </if>
+      <if test="record.accountstatus != null" >
+        accountstatus = #{record.accountstatus,jdbcType=CHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=BIGINT},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null" >
+        IdCard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positiveImgUrl != null" >
+        Positive_img_url = #{record.positiveImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reverseImgUrl != null" >
+        reverse_img_url = #{record.reverseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        audit_Time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_user
+    set userId = #{record.userid,jdbcType=VARCHAR},
+      Phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      unionId = #{record.unionid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      Nick_name = #{record.nickName,jdbcType=VARCHAR},
+      User_password = #{record.userPassword,jdbcType=VARCHAR},
+      Head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
+      Register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+      accounttype = #{record.accounttype,jdbcType=CHAR},
+      accountstatus = #{record.accountstatus,jdbcType=CHAR},
+      sex = #{record.sex,jdbcType=BIGINT},
+      city = #{record.city,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      IdCard = #{record.idcard,jdbcType=VARCHAR},
+      Positive_img_url = #{record.positiveImgUrl,jdbcType=VARCHAR},
+      reverse_img_url = #{record.reverseImgUrl,jdbcType=VARCHAR},
+      message = #{record.message,jdbcType=VARCHAR},
+      audit_Time = #{record.auditTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.organize.bean.TblUser" >
+    update tbl_user
+    <set >
+      <if test="phoneNumber != null" >
+        Phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        unionId = #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        Nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        User_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null" >
+        Head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        Register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accounttype != null" >
+        accounttype = #{accounttype,jdbcType=CHAR},
+      </if>
+      <if test="accountstatus != null" >
+        accountstatus = #{accountstatus,jdbcType=CHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        IdCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="positiveImgUrl != null" >
+        Positive_img_url = #{positiveImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="reverseImgUrl != null" >
+        reverse_img_url = #{reverseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_Time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.organize.bean.TblUser" >
+    update tbl_user
+    set Phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      unionId = #{unionid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      Nick_name = #{nickName,jdbcType=VARCHAR},
+      User_password = #{userPassword,jdbcType=VARCHAR},
+      Head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      Register_time = #{registerTime,jdbcType=TIMESTAMP},
+      accounttype = #{accounttype,jdbcType=CHAR},
+      accountstatus = #{accountstatus,jdbcType=CHAR},
+      sex = #{sex,jdbcType=BIGINT},
+      city = #{city,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      IdCard = #{idcard,jdbcType=VARCHAR},
+      Positive_img_url = #{positiveImgUrl,jdbcType=VARCHAR},
+      reverse_img_url = #{reverseImgUrl,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      audit_Time = #{auditTime,jdbcType=TIMESTAMP}
+    where userId = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,52 @@
+package com.xoado.FilingCabinet.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.xoado.FilingCabinet.service.IHandover;
+import com.xoado.common.XoadoResult;
+
+/**
+* @author 作者
+* @version 创建时间：2018年8月6日 下午5:56:09
+* 类说明
+*/
+@Controller
+@RequestMapping("/express")
+public class Uexpress {
+	
+	@Autowired
+	private IHandover iHandover;
+	
+//	发送快递
+	@RequestMapping(value="/send",method=RequestMethod.POST)
+	@ResponseBody
+	public XoadoResult ToSendExpress(String handout, String recipient, String task_id, String express, String archives,
+			String businesslabel, String comments, String location,HttpServletRequest request) {
+		XoadoResult result = iHandover.ToSendExpress(handout, recipient, task_id, express, archives, businesslabel, comments, location, request);
+		return result;
+	}
+//	接收快递
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	@ResponseBody
+	public XoadoResult ReceiveExpress(String handoverid, String businesslabel, String comments,
+			String location, HttpServletRequest request) {
+		XoadoResult result = iHandover.ReceiveExpress(handoverid, businesslabel, comments, location, request);
+		return result;
+	}
+//	返回指定的快递单号的快递记录
+	@RequestMapping(method=RequestMethod.GET)
+	@ResponseBody
+	public XoadoResult ExpressRecord(String expressid,@RequestParam(value="page",required=false) Integer page,@RequestParam(value="rows",required=false) Integer rows, HttpServletRequest request) {
+		XoadoResult result = iHandover.ExpressRecord(expressid, page, rows, request);
+		return result;
+		
+	}
+
+}

@@ -1,0 +1,11 @@
+package com.xoado.tools.service;
+
+
+
+import com.xoado.common.XoadoResult;
+
+public interface aaaaIXoadoUpload {
+	
+	XoadoResult uploadBase64(String archiveid,String base64text) throws Exception;
+
+}

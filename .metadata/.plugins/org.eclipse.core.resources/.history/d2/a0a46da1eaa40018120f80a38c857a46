@@ -1,0 +1,32 @@
+package com.xoado.FilingCabinet.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.xoado.FilingCabinet.bean.TblArchives;
+import com.xoado.FilingCabinet.mapper.TblArchivesMapper;
+import com.xoado.FilingCabinet.service.IXDfileUpload;
+import com.xoado.common.XoadoResult;
+
+import net.sf.json.JSONArray;
+
+
+@Service
+public class XDfileUpload implements IXDfileUpload{
+	
+	@Autowired
+	private TblArchivesMapper tblArchivesMapper;
+
+	@Override
+	public XoadoResult uploadBase64(String archiveid, String base64text) throws Exception {
+		 TblArchives tblArchives = tblArchivesMapper.selectByPrimaryKey(archiveid);
+		 Object attachmentPicture = tblArchives.getAttachmentPicture();
+		 JSONArray attachmentPictureJson = JSONArray.fromObject(attachmentPicture);
+		 if(base64text==null){
+				return XoadoResult.build(402, "无参数");
+			}
+		 JSONArray jsonArray = JSONArray.fromObject(base64text);
+		return null;
+	}
+
+}

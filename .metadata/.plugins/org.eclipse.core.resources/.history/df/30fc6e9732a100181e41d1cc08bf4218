@@ -1,0 +1,27 @@
+package com.xoado.FilingCabinet.common;
+
+import java.util.Date;
+
+public class XDboex {
+	
+	private String boxid;
+	
+	private String BoxName;
+	
+	private Object OwnerOrg;
+	
+	private String Scopeofuse;
+	
+	private Object Location;
+	
+	private String Remarks;
+	
+	private String CloseState;
+	
+	private Object Creater;
+	
+	private Date CreaterTime;
+	
+	private String Shareto;
+
+}

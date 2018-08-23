@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.organize.mapper.TblAppInformationMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.organize.bean.TblAppInformation" >
+    <id column="app_Id" property="appId" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="creater_name" property="createrName" jdbcType="VARCHAR" />
+    <result column="orgId" property="orgid" jdbcType="VARCHAR" />
+    <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="app_type" property="appType" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="App_img_url" property="appImgUrl" jdbcType="VARCHAR" />
+    <result column="app_signing_key" property="appSigningKey" jdbcType="VARCHAR" />
+    <result column="app_private_key" property="appPrivateKey" jdbcType="VARCHAR" />
+    <result column="app_public_key" property="appPublicKey" jdbcType="VARCHAR" />
+    <result column="Audit_flag" property="auditFlag" jdbcType="BIGINT" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="audit_Time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="app_domain" property="appDomain" jdbcType="VARCHAR" />
+    <result column="app_path" property="appPath" jdbcType="VARCHAR" />
+    <result column="redirect_uri" property="redirectUri" jdbcType="VARCHAR" />
+    <result column="app_download_url" property="appDownloadUrl" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    app_Id, creater, creater_name, orgId, app_name, app_type, description, App_img_url, 
+    app_signing_key, app_private_key, app_public_key, Audit_flag, message, audit_Time, 
+    app_domain, app_path, redirect_uri, app_download_url, createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.organize.bean.TblAppInformationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_app_information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_app_information
+    where app_Id = #{appId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_app_information
+    where app_Id = #{appId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.organize.bean.TblAppInformationExample" >
+    delete from tbl_app_information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.organize.bean.TblAppInformation" >
+    insert into tbl_app_information (app_Id, creater, creater_name, 
+      orgId, app_name, app_type, 
+      description, App_img_url, app_signing_key, 
+      app_private_key, app_public_key, Audit_flag, 
+      message, audit_Time, app_domain, 
+      app_path, redirect_uri, app_download_url, 
+      createtime)
+    values (#{appId,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{createrName,jdbcType=VARCHAR}, 
+      #{orgid,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, #{appType,jdbcType=BIGINT}, 
+      #{description,jdbcType=VARCHAR}, #{appImgUrl,jdbcType=VARCHAR}, #{appSigningKey,jdbcType=VARCHAR}, 
+      #{appPrivateKey,jdbcType=VARCHAR}, #{appPublicKey,jdbcType=VARCHAR}, #{auditFlag,jdbcType=BIGINT}, 
+      #{message,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, #{appDomain,jdbcType=VARCHAR}, 
+      #{appPath,jdbcType=VARCHAR}, #{redirectUri,jdbcType=VARCHAR}, #{appDownloadUrl,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.organize.bean.TblAppInformation" >
+    insert into tbl_app_information
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        app_Id,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createrName != null" >
+        creater_name,
+      </if>
+      <if test="orgid != null" >
+        orgId,
+      </if>
+      <if test="appName != null" >
+        app_name,
+      </if>
+      <if test="appType != null" >
+        app_type,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="appImgUrl != null" >
+        App_img_url,
+      </if>
+      <if test="appSigningKey != null" >
+        app_signing_key,
+      </if>
+      <if test="appPrivateKey != null" >
+        app_private_key,
+      </if>
+      <if test="appPublicKey != null" >
+        app_public_key,
+      </if>
+      <if test="auditFlag != null" >
+        Audit_flag,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="auditTime != null" >
+        audit_Time,
+      </if>
+      <if test="appDomain != null" >
+        app_domain,
+      </if>
+      <if test="appPath != null" >
+        app_path,
+      </if>
+      <if test="redirectUri != null" >
+        redirect_uri,
+      </if>
+      <if test="appDownloadUrl != null" >
+        app_download_url,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="appImgUrl != null" >
+        #{appImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="appSigningKey != null" >
+        #{appSigningKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appPrivateKey != null" >
+        #{appPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appPublicKey != null" >
+        #{appPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="auditFlag != null" >
+        #{auditFlag,jdbcType=BIGINT},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appDomain != null" >
+        #{appDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUri != null" >
+        #{redirectUri,jdbcType=VARCHAR},
+      </if>
+      <if test="appDownloadUrl != null" >
+        #{appDownloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.organize.bean.TblAppInformationExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_app_information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_app_information
+    <set >
+      <if test="record.appId != null" >
+        app_Id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creater != null" >
+        creater = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createrName != null" >
+        creater_name = #{record.createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgid != null" >
+        orgId = #{record.orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appName != null" >
+        app_name = #{record.appName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appType != null" >
+        app_type = #{record.appType,jdbcType=BIGINT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appImgUrl != null" >
+        App_img_url = #{record.appImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appSigningKey != null" >
+        app_signing_key = #{record.appSigningKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appPrivateKey != null" >
+        app_private_key = #{record.appPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appPublicKey != null" >
+        app_public_key = #{record.appPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditFlag != null" >
+        Audit_flag = #{record.auditFlag,jdbcType=BIGINT},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        audit_Time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.appDomain != null" >
+        app_domain = #{record.appDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appPath != null" >
+        app_path = #{record.appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redirectUri != null" >
+        redirect_uri = #{record.redirectUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appDownloadUrl != null" >
+        app_download_url = #{record.appDownloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_app_information
+    set app_Id = #{record.appId,jdbcType=VARCHAR},
+      creater = #{record.creater,jdbcType=VARCHAR},
+      creater_name = #{record.createrName,jdbcType=VARCHAR},
+      orgId = #{record.orgid,jdbcType=VARCHAR},
+      app_name = #{record.appName,jdbcType=VARCHAR},
+      app_type = #{record.appType,jdbcType=BIGINT},
+      description = #{record.description,jdbcType=VARCHAR},
+      App_img_url = #{record.appImgUrl,jdbcType=VARCHAR},
+      app_signing_key = #{record.appSigningKey,jdbcType=VARCHAR},
+      app_private_key = #{record.appPrivateKey,jdbcType=VARCHAR},
+      app_public_key = #{record.appPublicKey,jdbcType=VARCHAR},
+      Audit_flag = #{record.auditFlag,jdbcType=BIGINT},
+      message = #{record.message,jdbcType=VARCHAR},
+      audit_Time = #{record.auditTime,jdbcType=TIMESTAMP},
+      app_domain = #{record.appDomain,jdbcType=VARCHAR},
+      app_path = #{record.appPath,jdbcType=VARCHAR},
+      redirect_uri = #{record.redirectUri,jdbcType=VARCHAR},
+      app_download_url = #{record.appDownloadUrl,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.organize.bean.TblAppInformation" >
+    update tbl_app_information
+    <set >
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createrName != null" >
+        creater_name = #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        orgId = #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        app_type = #{appType,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="appImgUrl != null" >
+        App_img_url = #{appImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="appSigningKey != null" >
+        app_signing_key = #{appSigningKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appPrivateKey != null" >
+        app_private_key = #{appPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appPublicKey != null" >
+        app_public_key = #{appPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="auditFlag != null" >
+        Audit_flag = #{auditFlag,jdbcType=BIGINT},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_Time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appDomain != null" >
+        app_domain = #{appDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        app_path = #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUri != null" >
+        redirect_uri = #{redirectUri,jdbcType=VARCHAR},
+      </if>
+      <if test="appDownloadUrl != null" >
+        app_download_url = #{appDownloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where app_Id = #{appId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.organize.bean.TblAppInformation" >
+    update tbl_app_information
+    set creater = #{creater,jdbcType=VARCHAR},
+      creater_name = #{createrName,jdbcType=VARCHAR},
+      orgId = #{orgid,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      app_type = #{appType,jdbcType=BIGINT},
+      description = #{description,jdbcType=VARCHAR},
+      App_img_url = #{appImgUrl,jdbcType=VARCHAR},
+      app_signing_key = #{appSigningKey,jdbcType=VARCHAR},
+      app_private_key = #{appPrivateKey,jdbcType=VARCHAR},
+      app_public_key = #{appPublicKey,jdbcType=VARCHAR},
+      Audit_flag = #{auditFlag,jdbcType=BIGINT},
+      message = #{message,jdbcType=VARCHAR},
+      audit_Time = #{auditTime,jdbcType=TIMESTAMP},
+      app_domain = #{appDomain,jdbcType=VARCHAR},
+      app_path = #{appPath,jdbcType=VARCHAR},
+      redirect_uri = #{redirectUri,jdbcType=VARCHAR},
+      app_download_url = #{appDownloadUrl,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where app_Id = #{appId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,95 @@
+package com.xoado.XDTools.bean;
+
+import java.util.Date;
+
+public class TblArchivesA {
+    private String archiveId;
+
+    private String archiveName;
+
+    private Object ownerOrg;
+
+    private Object ownerUser;
+
+    private Object comments;
+
+    private Object attachmentPicture;
+
+    private Object attachmentDocument;
+
+    private Date createTime;
+
+    private Object creater;
+
+    public String getArchiveId() {
+        return archiveId;
+    }
+
+    public void setArchiveId(String archiveId) {
+        this.archiveId = archiveId == null ? null : archiveId.trim();
+    }
+
+    public String getArchiveName() {
+        return archiveName;
+    }
+
+    public void setArchiveName(String archiveName) {
+        this.archiveName = archiveName == null ? null : archiveName.trim();
+    }
+
+    public Object getOwnerOrg() {
+        return ownerOrg;
+    }
+
+    public void setOwnerOrg(Object ownerOrg) {
+        this.ownerOrg = ownerOrg;
+    }
+
+    public Object getOwnerUser() {
+        return ownerUser;
+    }
+
+    public void setOwnerUser(Object ownerUser) {
+        this.ownerUser = ownerUser;
+    }
+
+    public Object getComments() {
+        return comments;
+    }
+
+    public void setComments(Object comments) {
+        this.comments = comments;
+    }
+
+    public Object getAttachmentPicture() {
+        return attachmentPicture;
+    }
+
+    public void setAttachmentPicture(Object attachmentPicture) {
+        this.attachmentPicture = attachmentPicture;
+    }
+
+    public Object getAttachmentDocument() {
+        return attachmentDocument;
+    }
+
+    public void setAttachmentDocument(Object attachmentDocument) {
+        this.attachmentDocument = attachmentDocument;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Object getCreater() {
+        return creater;
+    }
+
+    public void setCreater(Object creater) {
+        this.creater = creater;
+    }
+}

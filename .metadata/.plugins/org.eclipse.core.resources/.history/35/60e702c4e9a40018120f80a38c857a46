@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.XDTools.mapper.TblHandoverRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.XDTools.bean.TblHandoverRecord" >
+    <id column="handover_id" property="handoverId" jdbcType="VARCHAR" />
+    <result column="handout" property="handout" jdbcType="OTHER" />
+    <result column="recipient" property="recipient" jdbcType="OTHER" />
+    <result column="handover_type" property="handoverType" jdbcType="CHAR" />
+    <result column="handover_content" property="handoverContent" jdbcType="OTHER" />
+    <result column="express" property="express" jdbcType="OTHER" />
+    <result column="expressprogress" property="expressprogress" jdbcType="OTHER" />
+    <result column="progress" property="progress" jdbcType="OTHER" />
+    <result column="handover_state" property="handoverState" jdbcType="CHAR" />
+    <result column="handover_date" property="handoverDate" jdbcType="TIMESTAMP" />
+    <result column="complete_date" property="completeDate" jdbcType="TIMESTAMP" />
+    <result column="comments" property="comments" jdbcType="OTHER" />
+    <result column="businesslabel" property="businesslabel" jdbcType="VARCHAR" />
+    <result column="taskid" property="taskid" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="OTHER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    handover_id, handout, recipient, handover_type, handover_content, express, expressprogress, 
+    progress, handover_state, handover_date, complete_date, comments, businesslabel, 
+    taskid, location
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.XDTools.bean.TblHandoverRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_handover_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_handover_record
+    where handover_id = #{handoverId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_handover_record
+    where handover_id = #{handoverId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.XDTools.bean.TblHandoverRecordExample" >
+    delete from tbl_handover_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.XDTools.bean.TblHandoverRecord" >
+    insert into tbl_handover_record (handover_id, handout, recipient, 
+      handover_type, handover_content, express, 
+      expressprogress, progress, handover_state, 
+      handover_date, complete_date, comments, 
+      businesslabel, taskid, location
+      )
+    values (#{handoverId,jdbcType=VARCHAR}, #{handout,jdbcType=OTHER}, #{recipient,jdbcType=OTHER}, 
+      #{handoverType,jdbcType=CHAR}, #{handoverContent,jdbcType=OTHER}, #{express,jdbcType=OTHER}, 
+      #{expressprogress,jdbcType=OTHER}, #{progress,jdbcType=OTHER}, #{handoverState,jdbcType=CHAR}, 
+      #{handoverDate,jdbcType=TIMESTAMP}, #{completeDate,jdbcType=TIMESTAMP}, #{comments,jdbcType=OTHER}, 
+      #{businesslabel,jdbcType=VARCHAR}, #{taskid,jdbcType=VARCHAR}, #{location,jdbcType=OTHER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.XDTools.bean.TblHandoverRecord" >
+    insert into tbl_handover_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="handoverId != null" >
+        handover_id,
+      </if>
+      <if test="handout != null" >
+        handout,
+      </if>
+      <if test="recipient != null" >
+        recipient,
+      </if>
+      <if test="handoverType != null" >
+        handover_type,
+      </if>
+      <if test="handoverContent != null" >
+        handover_content,
+      </if>
+      <if test="express != null" >
+        express,
+      </if>
+      <if test="expressprogress != null" >
+        expressprogress,
+      </if>
+      <if test="progress != null" >
+        progress,
+      </if>
+      <if test="handoverState != null" >
+        handover_state,
+      </if>
+      <if test="handoverDate != null" >
+        handover_date,
+      </if>
+      <if test="completeDate != null" >
+        complete_date,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+      <if test="businesslabel != null" >
+        businesslabel,
+      </if>
+      <if test="taskid != null" >
+        taskid,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="handoverId != null" >
+        #{handoverId,jdbcType=VARCHAR},
+      </if>
+      <if test="handout != null" >
+        #{handout,jdbcType=OTHER},
+      </if>
+      <if test="recipient != null" >
+        #{recipient,jdbcType=OTHER},
+      </if>
+      <if test="handoverType != null" >
+        #{handoverType,jdbcType=CHAR},
+      </if>
+      <if test="handoverContent != null" >
+        #{handoverContent,jdbcType=OTHER},
+      </if>
+      <if test="express != null" >
+        #{express,jdbcType=OTHER},
+      </if>
+      <if test="expressprogress != null" >
+        #{expressprogress,jdbcType=OTHER},
+      </if>
+      <if test="progress != null" >
+        #{progress,jdbcType=OTHER},
+      </if>
+      <if test="handoverState != null" >
+        #{handoverState,jdbcType=CHAR},
+      </if>
+      <if test="handoverDate != null" >
+        #{handoverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeDate != null" >
+        #{completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=OTHER},
+      </if>
+      <if test="businesslabel != null" >
+        #{businesslabel,jdbcType=VARCHAR},
+      </if>
+      <if test="taskid != null" >
+        #{taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.XDTools.bean.TblHandoverRecordExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_handover_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_handover_record
+    <set >
+      <if test="record.handoverId != null" >
+        handover_id = #{record.handoverId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handout != null" >
+        handout = #{record.handout,jdbcType=OTHER},
+      </if>
+      <if test="record.recipient != null" >
+        recipient = #{record.recipient,jdbcType=OTHER},
+      </if>
+      <if test="record.handoverType != null" >
+        handover_type = #{record.handoverType,jdbcType=CHAR},
+      </if>
+      <if test="record.handoverContent != null" >
+        handover_content = #{record.handoverContent,jdbcType=OTHER},
+      </if>
+      <if test="record.express != null" >
+        express = #{record.express,jdbcType=OTHER},
+      </if>
+      <if test="record.expressprogress != null" >
+        expressprogress = #{record.expressprogress,jdbcType=OTHER},
+      </if>
+      <if test="record.progress != null" >
+        progress = #{record.progress,jdbcType=OTHER},
+      </if>
+      <if test="record.handoverState != null" >
+        handover_state = #{record.handoverState,jdbcType=CHAR},
+      </if>
+      <if test="record.handoverDate != null" >
+        handover_date = #{record.handoverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completeDate != null" >
+        complete_date = #{record.completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.comments != null" >
+        comments = #{record.comments,jdbcType=OTHER},
+      </if>
+      <if test="record.businesslabel != null" >
+        businesslabel = #{record.businesslabel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskid != null" >
+        taskid = #{record.taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=OTHER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_handover_record
+    set handover_id = #{record.handoverId,jdbcType=VARCHAR},
+      handout = #{record.handout,jdbcType=OTHER},
+      recipient = #{record.recipient,jdbcType=OTHER},
+      handover_type = #{record.handoverType,jdbcType=CHAR},
+      handover_content = #{record.handoverContent,jdbcType=OTHER},
+      express = #{record.express,jdbcType=OTHER},
+      expressprogress = #{record.expressprogress,jdbcType=OTHER},
+      progress = #{record.progress,jdbcType=OTHER},
+      handover_state = #{record.handoverState,jdbcType=CHAR},
+      handover_date = #{record.handoverDate,jdbcType=TIMESTAMP},
+      complete_date = #{record.completeDate,jdbcType=TIMESTAMP},
+      comments = #{record.comments,jdbcType=OTHER},
+      businesslabel = #{record.businesslabel,jdbcType=VARCHAR},
+      taskid = #{record.taskid,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=OTHER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.XDTools.bean.TblHandoverRecord" >
+    update tbl_handover_record
+    <set >
+      <if test="handout != null" >
+        handout = #{handout,jdbcType=OTHER},
+      </if>
+      <if test="recipient != null" >
+        recipient = #{recipient,jdbcType=OTHER},
+      </if>
+      <if test="handoverType != null" >
+        handover_type = #{handoverType,jdbcType=CHAR},
+      </if>
+      <if test="handoverContent != null" >
+        handover_content = #{handoverContent,jdbcType=OTHER},
+      </if>
+      <if test="express != null" >
+        express = #{express,jdbcType=OTHER},
+      </if>
+      <if test="expressprogress != null" >
+        expressprogress = #{expressprogress,jdbcType=OTHER},
+      </if>
+      <if test="progress != null" >
+        progress = #{progress,jdbcType=OTHER},
+      </if>
+      <if test="handoverState != null" >
+        handover_state = #{handoverState,jdbcType=CHAR},
+      </if>
+      <if test="handoverDate != null" >
+        handover_date = #{handoverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeDate != null" >
+        complete_date = #{completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=OTHER},
+      </if>
+      <if test="businesslabel != null" >
+        businesslabel = #{businesslabel,jdbcType=VARCHAR},
+      </if>
+      <if test="taskid != null" >
+        taskid = #{taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=OTHER},
+      </if>
+    </set>
+    where handover_id = #{handoverId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.XDTools.bean.TblHandoverRecord" >
+    update tbl_handover_record
+    set handout = #{handout,jdbcType=OTHER},
+      recipient = #{recipient,jdbcType=OTHER},
+      handover_type = #{handoverType,jdbcType=CHAR},
+      handover_content = #{handoverContent,jdbcType=OTHER},
+      express = #{express,jdbcType=OTHER},
+      expressprogress = #{expressprogress,jdbcType=OTHER},
+      progress = #{progress,jdbcType=OTHER},
+      handover_state = #{handoverState,jdbcType=CHAR},
+      handover_date = #{handoverDate,jdbcType=TIMESTAMP},
+      complete_date = #{completeDate,jdbcType=TIMESTAMP},
+      comments = #{comments,jdbcType=OTHER},
+      businesslabel = #{businesslabel,jdbcType=VARCHAR},
+      taskid = #{taskid,jdbcType=VARCHAR},
+      location = #{location,jdbcType=OTHER}
+    where handover_id = #{handoverId,jdbcType=VARCHAR}
+  </update>
+</mapper>

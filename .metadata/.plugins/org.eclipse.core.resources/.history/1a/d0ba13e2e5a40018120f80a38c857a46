@@ -1,0 +1,21 @@
+package com.xoado.tools.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.xoado.common.XoadoResult;
+import com.xoado.tools.service.Iservice;
+
+@Controller
+@RequestMapping("/fileupload")
+public class Acontroller {
+	
+	@Autowired
+	private Iservice iservice;
+	
+	public XoadoResult test(String id){
+		
+	}
+
+}

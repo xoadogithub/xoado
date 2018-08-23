@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.XDTools.mapper.TblCurrentArchivesMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.XDTools.bean.TblCurrentArchives" >
+    <id column="ownerid" property="ownerid" jdbcType="VARCHAR" />
+    <id column="archive_id" property="archiveId" jdbcType="VARCHAR" />
+    <result column="ownertype" property="ownertype" jdbcType="CHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="holdfrom" property="holdfrom" jdbcType="OTHER" />
+    <result column="holddate" property="holddate" jdbcType="TIMESTAMP" />
+    <result column="taskid" property="taskid" jdbcType="VARCHAR" />
+    <result column="handover_id" property="handoverId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ownerid, archive_id, ownertype, quantity, status, holdfrom, holddate, taskid, handover_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.XDTools.bean.TblCurrentArchivesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_current_archives
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.xoado.XDTools.bean.TblCurrentArchivesKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_current_archives
+    where ownerid = #{ownerid,jdbcType=VARCHAR}
+      and archive_id = #{archiveId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.xoado.XDTools.bean.TblCurrentArchivesKey" >
+    delete from tbl_current_archives
+    where ownerid = #{ownerid,jdbcType=VARCHAR}
+      and archive_id = #{archiveId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.XDTools.bean.TblCurrentArchivesExample" >
+    delete from tbl_current_archives
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.XDTools.bean.TblCurrentArchives" >
+    insert into tbl_current_archives (ownerid, archive_id, ownertype, 
+      quantity, status, holdfrom, 
+      holddate, taskid, handover_id
+      )
+    values (#{ownerid,jdbcType=VARCHAR}, #{archiveId,jdbcType=VARCHAR}, #{ownertype,jdbcType=CHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{holdfrom,jdbcType=OTHER}, 
+      #{holddate,jdbcType=TIMESTAMP}, #{taskid,jdbcType=VARCHAR}, #{handoverId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.XDTools.bean.TblCurrentArchives" >
+    insert into tbl_current_archives
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ownerid != null" >
+        ownerid,
+      </if>
+      <if test="archiveId != null" >
+        archive_id,
+      </if>
+      <if test="ownertype != null" >
+        ownertype,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="holdfrom != null" >
+        holdfrom,
+      </if>
+      <if test="holddate != null" >
+        holddate,
+      </if>
+      <if test="taskid != null" >
+        taskid,
+      </if>
+      <if test="handoverId != null" >
+        handover_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ownerid != null" >
+        #{ownerid,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveId != null" >
+        #{archiveId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownertype != null" >
+        #{ownertype,jdbcType=CHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="holdfrom != null" >
+        #{holdfrom,jdbcType=OTHER},
+      </if>
+      <if test="holddate != null" >
+        #{holddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskid != null" >
+        #{taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="handoverId != null" >
+        #{handoverId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.XDTools.bean.TblCurrentArchivesExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_current_archives
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_current_archives
+    <set >
+      <if test="record.ownerid != null" >
+        ownerid = #{record.ownerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.archiveId != null" >
+        archive_id = #{record.archiveId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownertype != null" >
+        ownertype = #{record.ownertype,jdbcType=CHAR},
+      </if>
+      <if test="record.quantity != null" >
+        quantity = #{record.quantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.holdfrom != null" >
+        holdfrom = #{record.holdfrom,jdbcType=OTHER},
+      </if>
+      <if test="record.holddate != null" >
+        holddate = #{record.holddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskid != null" >
+        taskid = #{record.taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handoverId != null" >
+        handover_id = #{record.handoverId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_current_archives
+    set ownerid = #{record.ownerid,jdbcType=VARCHAR},
+      archive_id = #{record.archiveId,jdbcType=VARCHAR},
+      ownertype = #{record.ownertype,jdbcType=CHAR},
+      quantity = #{record.quantity,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=CHAR},
+      holdfrom = #{record.holdfrom,jdbcType=OTHER},
+      holddate = #{record.holddate,jdbcType=TIMESTAMP},
+      taskid = #{record.taskid,jdbcType=VARCHAR},
+      handover_id = #{record.handoverId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.XDTools.bean.TblCurrentArchives" >
+    update tbl_current_archives
+    <set >
+      <if test="ownertype != null" >
+        ownertype = #{ownertype,jdbcType=CHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="holdfrom != null" >
+        holdfrom = #{holdfrom,jdbcType=OTHER},
+      </if>
+      <if test="holddate != null" >
+        holddate = #{holddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskid != null" >
+        taskid = #{taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="handoverId != null" >
+        handover_id = #{handoverId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ownerid = #{ownerid,jdbcType=VARCHAR}
+      and archive_id = #{archiveId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.XDTools.bean.TblCurrentArchives" >
+    update tbl_current_archives
+    set ownertype = #{ownertype,jdbcType=CHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      holdfrom = #{holdfrom,jdbcType=OTHER},
+      holddate = #{holddate,jdbcType=TIMESTAMP},
+      taskid = #{taskid,jdbcType=VARCHAR},
+      handover_id = #{handoverId,jdbcType=VARCHAR}
+    where ownerid = #{ownerid,jdbcType=VARCHAR}
+      and archive_id = #{archiveId,jdbcType=VARCHAR}
+  </update>
+</mapper>

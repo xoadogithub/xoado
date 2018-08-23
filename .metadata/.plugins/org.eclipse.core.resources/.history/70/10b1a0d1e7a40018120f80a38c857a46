@@ -1,0 +1,53 @@
+package com.xoado.tools.common;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.UUID;
+
+import com.xoado.common.MD5;
+
+import net.coobird.thumbnailator.Thumbnails;
+import net.sf.json.JSONObject;
+import sun.misc.BASE64Decoder;
+
+@SuppressWarnings("restriction")
+public class XoadoFileUpload {
+	
+	public static Object base64upload(String name,String base64text) throws Exception{
+		JSONObject jsonObject = new JSONObject();
+		BASE64Decoder decoder = new BASE64Decoder(); 
+		byte[] b = decoder.decodeBuffer(base64text.toString());
+		 for(int j=0;j<b.length;++j) {
+			 if(b[j]<0)  {
+				 b[j]+=256;
+			 }
+		 }
+//		 String url = "D:/";
+		 String url = "/usr/tomcat/apache-tomcat-8.5.29/webapps/File/image/";
+//		 创建文件夹
+		 File file = new File(url);
+		 if(!file.exists()){	
+				file.mkdirs();	
+			}		 
+//		 新生成的图片名称
+		 String newName = MD5.MD5Encode(UUID.randomUUID().toString())+name;
+//		 图片的名称及上传路径
+		 String imgFilePath = url+newName; 
+//		 以流的形式上传文件
+		 OutputStream out = new FileOutputStream(imgFilePath);
+//		 上传及关流
+		 out.write(b);
+		 out.flush();
+		 out.close();
+//		 缩略图上传的路径
+		 String thumbnail = url+"-zip-"+name;
+		 Thumbnails.of(imgFilePath).size(50,50).toFile(thumbnail);
+//		 返回json数据
+		 jsonObject.put("imageName", newName);
+		 jsonObject.put("imageUrl", "www.xoado.com"+imgFilePath);
+		 
+		 return jsonObject;
+
+}
+}

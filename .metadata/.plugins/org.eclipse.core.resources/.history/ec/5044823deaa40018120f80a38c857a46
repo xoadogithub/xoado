@@ -1,0 +1,16 @@
+package com.xoado.FilingCabinet.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.xoado.FilingCabinet.service.IXDfileUpload;
+
+@Controller
+@RequestMapping("/aaa")
+public class UXDfileUpload {
+	
+	@Autowired
+	private IXDfileUpload ixDfileUpload;
+
+}

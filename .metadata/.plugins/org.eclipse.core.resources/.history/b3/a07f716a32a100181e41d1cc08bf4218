@@ -1,0 +1,15 @@
+package com.xoado.FilingCabinet.common;
+
+public class XDboex {
+	private String boxid;
+	dboex.setBoxName;
+	dboex.setOwnerOrg;
+	dboex.setScopeofuse;
+	dboex.setLocation;
+	dboex.setRemarks;
+	dboex.setCloseState;
+	dboex.setCreater;
+	dboex.setCreaterTime;
+	dboex.setShareto;
+
+}

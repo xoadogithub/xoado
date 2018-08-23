@@ -1,0 +1,11 @@
+2018.7.12  修改信息：
+	organize项目修改图片路径；
+	原因：服务器默认访问路径是www.xoado.com/tomcat的根目录，所以将图片路径修改到改目录下  ，修改如下：
+			服务器域名:www.xoado.com
+			配置总的上传目录：/usr/tomcat/apache-tomcat-8.5.29/webapps
+			分级目录：/IMAGE/图片分类
+				接口实现部分：
+					首先创建跟分级目录:  /usr/tomcat/apache-tomcat-8.5.29/webapps/IMAGE/图片分类
+					获取文件的name   将图片上传到/usr/tomcat/apache-tomcat-8.5.29/webapps/IMAGE/图片分类/name
+					将path存放在数据库: www.xoado.com/IMAGE/图片分类/name
+					

@@ -1,0 +1,9 @@
+package com.xoado.tools.service;
+
+import com.xoado.common.XoadoResult;
+
+public interface Iservice {
+	
+	XoadoResult test();
+
+}

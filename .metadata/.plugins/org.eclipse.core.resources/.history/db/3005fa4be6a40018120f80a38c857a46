@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.organize.mapper.TblOrganizeMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.organize.bean.TblOrganizeMember" >
+    <id column="organizeId" property="organizeid" jdbcType="VARCHAR" />
+    <id column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="CHAR" />
+    <result column="parttimejob" property="parttimejob" jdbcType="BIGINT" />
+    <result column="join_time" property="joinTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    organizeId, userId, role, parttimejob, join_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.organize.bean.TblOrganizeMemberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_organize_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.xoado.organize.bean.TblOrganizeMemberKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_organize_member
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+      and userId = #{userid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.xoado.organize.bean.TblOrganizeMemberKey" >
+    delete from tbl_organize_member
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+      and userId = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.organize.bean.TblOrganizeMemberExample" >
+    delete from tbl_organize_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.organize.bean.TblOrganizeMember" >
+    insert into tbl_organize_member (organizeId, userId, role, 
+      parttimejob, join_time)
+    values (#{organizeid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{role,jdbcType=CHAR}, 
+      #{parttimejob,jdbcType=BIGINT}, #{joinTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.organize.bean.TblOrganizeMember" >
+    insert into tbl_organize_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="organizeid != null" >
+        organizeId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="parttimejob != null" >
+        parttimejob,
+      </if>
+      <if test="joinTime != null" >
+        join_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="organizeid != null" >
+        #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=CHAR},
+      </if>
+      <if test="parttimejob != null" >
+        #{parttimejob,jdbcType=BIGINT},
+      </if>
+      <if test="joinTime != null" >
+        #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.organize.bean.TblOrganizeMemberExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_organize_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_organize_member
+    <set >
+      <if test="record.organizeid != null" >
+        organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.role != null" >
+        role = #{record.role,jdbcType=CHAR},
+      </if>
+      <if test="record.parttimejob != null" >
+        parttimejob = #{record.parttimejob,jdbcType=BIGINT},
+      </if>
+      <if test="record.joinTime != null" >
+        join_time = #{record.joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_organize_member
+    set organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=VARCHAR},
+      role = #{record.role,jdbcType=CHAR},
+      parttimejob = #{record.parttimejob,jdbcType=BIGINT},
+      join_time = #{record.joinTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.organize.bean.TblOrganizeMember" >
+    update tbl_organize_member
+    <set >
+      <if test="role != null" >
+        role = #{role,jdbcType=CHAR},
+      </if>
+      <if test="parttimejob != null" >
+        parttimejob = #{parttimejob,jdbcType=BIGINT},
+      </if>
+      <if test="joinTime != null" >
+        join_time = #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+      and userId = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.organize.bean.TblOrganizeMember" >
+    update tbl_organize_member
+    set role = #{role,jdbcType=CHAR},
+      parttimejob = #{parttimejob,jdbcType=BIGINT},
+      join_time = #{joinTime,jdbcType=TIMESTAMP}
+    where organizeId = #{organizeid,jdbcType=VARCHAR}
+      and userId = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

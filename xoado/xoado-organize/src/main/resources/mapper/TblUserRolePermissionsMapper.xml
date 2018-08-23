@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.organize.mapper.TblUserRolePermissionsMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.organize.bean.TblUserRolePermissions" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="objectId" property="objectid" jdbcType="VARCHAR" />
+    <result column="roleoruser" property="roleoruser" jdbcType="BIGINT" />
+    <result column="organizeId" property="organizeid" jdbcType="VARCHAR" />
+    <result column="permissionsId" property="permissionsid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, objectId, roleoruser, organizeId, permissionsId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.organize.bean.TblUserRolePermissionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_user_role_permissions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_user_role_permissions
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_user_role_permissions
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.organize.bean.TblUserRolePermissionsExample" >
+    delete from tbl_user_role_permissions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.organize.bean.TblUserRolePermissions" >
+    insert into tbl_user_role_permissions (Id, objectId, roleoruser, 
+      organizeId, permissionsId)
+    values (#{id,jdbcType=INTEGER}, #{objectid,jdbcType=VARCHAR}, #{roleoruser,jdbcType=BIGINT}, 
+      #{organizeid,jdbcType=VARCHAR}, #{permissionsid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.organize.bean.TblUserRolePermissions" >
+    insert into tbl_user_role_permissions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="objectid != null" >
+        objectId,
+      </if>
+      <if test="roleoruser != null" >
+        roleoruser,
+      </if>
+      <if test="organizeid != null" >
+        organizeId,
+      </if>
+      <if test="permissionsid != null" >
+        permissionsId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="objectid != null" >
+        #{objectid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleoruser != null" >
+        #{roleoruser,jdbcType=BIGINT},
+      </if>
+      <if test="organizeid != null" >
+        #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionsid != null" >
+        #{permissionsid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.organize.bean.TblUserRolePermissionsExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_user_role_permissions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_user_role_permissions
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.objectid != null" >
+        objectId = #{record.objectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleoruser != null" >
+        roleoruser = #{record.roleoruser,jdbcType=BIGINT},
+      </if>
+      <if test="record.organizeid != null" >
+        organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionsid != null" >
+        permissionsId = #{record.permissionsid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_user_role_permissions
+    set Id = #{record.id,jdbcType=INTEGER},
+      objectId = #{record.objectid,jdbcType=VARCHAR},
+      roleoruser = #{record.roleoruser,jdbcType=BIGINT},
+      organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      permissionsId = #{record.permissionsid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.organize.bean.TblUserRolePermissions" >
+    update tbl_user_role_permissions
+    <set >
+      <if test="objectid != null" >
+        objectId = #{objectid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleoruser != null" >
+        roleoruser = #{roleoruser,jdbcType=BIGINT},
+      </if>
+      <if test="organizeid != null" >
+        organizeId = #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionsid != null" >
+        permissionsId = #{permissionsid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.organize.bean.TblUserRolePermissions" >
+    update tbl_user_role_permissions
+    set objectId = #{objectid,jdbcType=VARCHAR},
+      roleoruser = #{roleoruser,jdbcType=BIGINT},
+      organizeId = #{organizeid,jdbcType=VARCHAR},
+      permissionsId = #{permissionsid,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

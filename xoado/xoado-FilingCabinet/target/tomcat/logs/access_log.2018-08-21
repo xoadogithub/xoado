@@ -1,0 +1,2 @@
+0:0:0:0:0:0:0:1 - - [21/Aug/2018:17:09:29 +0800] "GET /index.jsp HTTP/1.1" 200 767878 http-bio-8088-exec-1 1230
+0:0:0:0:0:0:0:1 - - [21/Aug/2018:17:10:08 +0800] "POST /temporary/fileUpload HTTP/1.1" 200 75 http-bio-8088-exec-3 15898

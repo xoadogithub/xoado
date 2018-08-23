@@ -1,0 +1,22 @@
+package com.xoado.tools.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.xoado.common.XoadoResult;
+import com.xoado.tools.mapper.TblArchivesMapper;
+import com.xoado.tools.service.I;
+
+@Service
+public class B implements I{
+	
+	@Autowired(required=false)
+	private TblArchivesMapper archivesMapper;
+
+	@Override
+	public XoadoResult a() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

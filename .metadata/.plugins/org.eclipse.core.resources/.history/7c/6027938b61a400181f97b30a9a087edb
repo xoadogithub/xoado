@@ -1,0 +1,31 @@
+package com.xoado.tools.controller;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.xoado.common.XoadoResult;
+import com.xoado.tools.service.aaaaIXoadoUpload;
+
+
+@Controller
+@RequestMapping("/fileupload")
+public class FileUpload {
+	
+	@Autowired
+	private aaaaIXoadoUpload iXoadoUpload;
+
+	@RequestMapping(value="/base64",method=RequestMethod.POST)
+	@ResponseBody
+	public XoadoResult uploadBase64(@RequestParam("archiveid") String archiveid,@RequestParam("base64text") String base64text) throws Exception{
+		XoadoResult result = iXoadoUpload.uploadBase64(archiveid, base64text);
+		return result;
+	}
+
+}

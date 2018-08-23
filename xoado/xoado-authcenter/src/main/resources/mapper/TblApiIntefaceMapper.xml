@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.authcenter.mapper.TblApiIntefaceMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.authcenter.bean.TblApiInteface" >
+    <id column="api_Id" property="apiId" jdbcType="VARCHAR" />
+    <result column="app_Id" property="appId" jdbcType="VARCHAR" />
+    <result column="api_path" property="apiPath" jdbcType="VARCHAR" />
+    <result column="request_method" property="requestMethod" jdbcType="BIGINT" />
+    <result column="header" property="header" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="parameter" property="parameter" jdbcType="VARCHAR" />
+    <result column="APIstatus" property="apistatus" jdbcType="CHAR" />
+    <result column="auditstatus" property="auditstatus" jdbcType="CHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    api_Id, app_Id, api_path, request_method, header, description, parameter, APIstatus, 
+    auditstatus, createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.authcenter.bean.TblApiIntefaceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_api_inteface
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_api_inteface
+    where api_Id = #{apiId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_api_inteface
+    where api_Id = #{apiId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.authcenter.bean.TblApiIntefaceExample" >
+    delete from tbl_api_inteface
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.authcenter.bean.TblApiInteface" >
+    insert into tbl_api_inteface (api_Id, app_Id, api_path, 
+      request_method, header, description, 
+      parameter, APIstatus, auditstatus, 
+      createtime)
+    values (#{apiId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{apiPath,jdbcType=VARCHAR}, 
+      #{requestMethod,jdbcType=BIGINT}, #{header,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{parameter,jdbcType=VARCHAR}, #{apistatus,jdbcType=CHAR}, #{auditstatus,jdbcType=CHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.authcenter.bean.TblApiInteface" >
+    insert into tbl_api_inteface
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="apiId != null" >
+        api_Id,
+      </if>
+      <if test="appId != null" >
+        app_Id,
+      </if>
+      <if test="apiPath != null" >
+        api_path,
+      </if>
+      <if test="requestMethod != null" >
+        request_method,
+      </if>
+      <if test="header != null" >
+        header,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="parameter != null" >
+        parameter,
+      </if>
+      <if test="apistatus != null" >
+        APIstatus,
+      </if>
+      <if test="auditstatus != null" >
+        auditstatus,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="apiId != null" >
+        #{apiId,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="apiPath != null" >
+        #{apiPath,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null" >
+        #{requestMethod,jdbcType=BIGINT},
+      </if>
+      <if test="header != null" >
+        #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="apistatus != null" >
+        #{apistatus,jdbcType=CHAR},
+      </if>
+      <if test="auditstatus != null" >
+        #{auditstatus,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.authcenter.bean.TblApiIntefaceExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_api_inteface
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_api_inteface
+    <set >
+      <if test="record.apiId != null" >
+        api_Id = #{record.apiId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appId != null" >
+        app_Id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiPath != null" >
+        api_path = #{record.apiPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestMethod != null" >
+        request_method = #{record.requestMethod,jdbcType=BIGINT},
+      </if>
+      <if test="record.header != null" >
+        header = #{record.header,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameter != null" >
+        parameter = #{record.parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apistatus != null" >
+        APIstatus = #{record.apistatus,jdbcType=CHAR},
+      </if>
+      <if test="record.auditstatus != null" >
+        auditstatus = #{record.auditstatus,jdbcType=CHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_api_inteface
+    set api_Id = #{record.apiId,jdbcType=VARCHAR},
+      app_Id = #{record.appId,jdbcType=VARCHAR},
+      api_path = #{record.apiPath,jdbcType=VARCHAR},
+      request_method = #{record.requestMethod,jdbcType=BIGINT},
+      header = #{record.header,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      parameter = #{record.parameter,jdbcType=VARCHAR},
+      APIstatus = #{record.apistatus,jdbcType=CHAR},
+      auditstatus = #{record.auditstatus,jdbcType=CHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.authcenter.bean.TblApiInteface" >
+    update tbl_api_inteface
+    <set >
+      <if test="appId != null" >
+        app_Id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="apiPath != null" >
+        api_path = #{apiPath,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null" >
+        request_method = #{requestMethod,jdbcType=BIGINT},
+      </if>
+      <if test="header != null" >
+        header = #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        parameter = #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="apistatus != null" >
+        APIstatus = #{apistatus,jdbcType=CHAR},
+      </if>
+      <if test="auditstatus != null" >
+        auditstatus = #{auditstatus,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where api_Id = #{apiId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.authcenter.bean.TblApiInteface" >
+    update tbl_api_inteface
+    set app_Id = #{appId,jdbcType=VARCHAR},
+      api_path = #{apiPath,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=BIGINT},
+      header = #{header,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      parameter = #{parameter,jdbcType=VARCHAR},
+      APIstatus = #{apistatus,jdbcType=CHAR},
+      auditstatus = #{auditstatus,jdbcType=CHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where api_Id = #{apiId,jdbcType=VARCHAR}
+  </update>
+</mapper>

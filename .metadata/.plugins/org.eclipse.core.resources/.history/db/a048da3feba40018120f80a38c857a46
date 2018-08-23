@@ -1,0 +1,46 @@
+package com.xoado.tools.service.impl;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+import com.xoado.common.XoadoResult;
+import com.xoado.tools.bean.TblArchives;
+import com.xoado.tools.common.XoadoFileUpload;
+import com.xoado.tools.service.aaaaIXoadoUpload;
+import com.xoado.tools.mapper.TblArchivesMapper;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+@Service
+public class XoadoUpload implements aaaaIXoadoUpload{
+	
+	
+	@Autowired
+	private TblArchivesMapper tblArchivesMapper;
+
+	@Override
+	public XoadoResult uploadBase64(String archiveid, String base64text) throws Exception {
+		System.out.println("archiveid:"+archiveid);
+		TblArchives tblArchives = tblArchivesMapper.selectByPrimaryKey(archiveid);
+		System.out.println("tblArchives"+tblArchives);
+		Object attachmentPicture = tblArchives.getAttachmentPicture();
+		JSONArray attachmentPictureJson = JSONArray.fromObject(attachmentPicture);
+		if(base64text==null){
+			return XoadoResult.build(402, "无参数");
+		}
+		JSONArray jsonArray = JSONArray.fromObject(base64text);
+		for (int i = 0; i < jsonArray.size(); i++) {
+			Object jsonobject = jsonArray.get(i);
+			JSONObject fromObject = JSONObject.fromObject(jsonobject);
+			String imageName =(String) fromObject.get("imageName");
+			String base64 =(String) fromObject.get("base64text");
+			Object imageJson = XoadoFileUpload.base64upload(imageName, base64);
+			attachmentPictureJson.add(imageJson.toString());
+		}
+		return XoadoResult.ok();
+	}
+
+}

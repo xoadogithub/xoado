@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.authcenter.mapper.TblOrgPermissionsMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.authcenter.bean.TblOrgPermissions" >
+    <id column="permissionsId" property="permissionsid" jdbcType="VARCHAR" />
+    <result column="organizeId" property="organizeid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="permissions" property="permissions" jdbcType="OTHER" />
+    <result column="createrId" property="createrid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    permissionsId, organizeId, name, permissions, createrId, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.authcenter.bean.TblOrgPermissionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_org_permissions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_org_permissions
+    where permissionsId = #{permissionsid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_org_permissions
+    where permissionsId = #{permissionsid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.authcenter.bean.TblOrgPermissionsExample" >
+    delete from tbl_org_permissions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.authcenter.bean.TblOrgPermissions" >
+    insert into tbl_org_permissions (permissionsId, organizeId, name, 
+      permissions, createrId, create_time
+      )
+    values (#{permissionsid,jdbcType=VARCHAR}, #{organizeid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{permissions,jdbcType=OTHER}, #{createrid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.authcenter.bean.TblOrgPermissions" >
+    insert into tbl_org_permissions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="permissionsid != null" >
+        permissionsId,
+      </if>
+      <if test="organizeid != null" >
+        organizeId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="permissions != null" >
+        permissions,
+      </if>
+      <if test="createrid != null" >
+        createrId,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="permissionsid != null" >
+        #{permissionsid,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeid != null" >
+        #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="permissions != null" >
+        #{permissions,jdbcType=OTHER},
+      </if>
+      <if test="createrid != null" >
+        #{createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.authcenter.bean.TblOrgPermissionsExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_org_permissions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_org_permissions
+    <set >
+      <if test="record.permissionsid != null" >
+        permissionsId = #{record.permissionsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizeid != null" >
+        organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissions != null" >
+        permissions = #{record.permissions,jdbcType=OTHER},
+      </if>
+      <if test="record.createrid != null" >
+        createrId = #{record.createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_org_permissions
+    set permissionsId = #{record.permissionsid,jdbcType=VARCHAR},
+      organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      permissions = #{record.permissions,jdbcType=OTHER},
+      createrId = #{record.createrid,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.authcenter.bean.TblOrgPermissions" >
+    update tbl_org_permissions
+    <set >
+      <if test="organizeid != null" >
+        organizeId = #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="permissions != null" >
+        permissions = #{permissions,jdbcType=OTHER},
+      </if>
+      <if test="createrid != null" >
+        createrId = #{createrid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where permissionsId = #{permissionsid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.authcenter.bean.TblOrgPermissions" >
+    update tbl_org_permissions
+    set organizeId = #{organizeid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      permissions = #{permissions,jdbcType=OTHER},
+      createrId = #{createrid,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where permissionsId = #{permissionsid,jdbcType=VARCHAR}
+  </update>
+</mapper>

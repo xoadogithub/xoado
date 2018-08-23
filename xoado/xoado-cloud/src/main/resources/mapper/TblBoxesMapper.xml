@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xoado.tools.mapper.TblBoxesMapper" >
+  <resultMap id="BaseResultMap" type="com.xoado.tools.bean.TblBoxes" >
+    <id column="box_id" property="boxId" jdbcType="VARCHAR" />
+    <result column="box_name" property="boxName" jdbcType="VARCHAR" />
+    <result column="scopeofuse" property="scopeofuse" jdbcType="CHAR" />
+    <result column="moveable" property="moveable" jdbcType="CHAR" />
+    <result column="location" property="location" jdbcType="OTHER" />
+    <result column="owner_org" property="ownerOrg" jdbcType="OTHER" />
+    <result column="shareto" property="shareto" jdbcType="OTHER" />
+    <result column="creater" property="creater" jdbcType="OTHER" />
+    <result column="creater_time" property="createrTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="use_state" property="useState" jdbcType="INTEGER" />
+    <result column="close_state" property="closeState" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    box_id, box_name, scopeofuse, moveable, location, owner_org, shareto, creater, creater_time, 
+    remarks, use_state, close_state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xoado.tools.bean.TblBoxesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_boxes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_boxes
+    where box_id = #{boxId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_boxes
+    where box_id = #{boxId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xoado.tools.bean.TblBoxesExample" >
+    delete from tbl_boxes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xoado.tools.bean.TblBoxes" >
+    insert into tbl_boxes (box_id, box_name, scopeofuse, 
+      moveable, location, owner_org, 
+      shareto, creater, creater_time, 
+      remarks, use_state, close_state
+      )
+    values (#{boxId,jdbcType=VARCHAR}, #{boxName,jdbcType=VARCHAR}, #{scopeofuse,jdbcType=CHAR}, 
+      #{moveable,jdbcType=CHAR}, #{location,jdbcType=OTHER}, #{ownerOrg,jdbcType=OTHER}, 
+      #{shareto,jdbcType=OTHER}, #{creater,jdbcType=OTHER}, #{createrTime,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=VARCHAR}, #{useState,jdbcType=INTEGER}, #{closeState,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xoado.tools.bean.TblBoxes" >
+    insert into tbl_boxes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="boxId != null" >
+        box_id,
+      </if>
+      <if test="boxName != null" >
+        box_name,
+      </if>
+      <if test="scopeofuse != null" >
+        scopeofuse,
+      </if>
+      <if test="moveable != null" >
+        moveable,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="ownerOrg != null" >
+        owner_org,
+      </if>
+      <if test="shareto != null" >
+        shareto,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createrTime != null" >
+        creater_time,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="useState != null" >
+        use_state,
+      </if>
+      <if test="closeState != null" >
+        close_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="boxId != null" >
+        #{boxId,jdbcType=VARCHAR},
+      </if>
+      <if test="boxName != null" >
+        #{boxName,jdbcType=VARCHAR},
+      </if>
+      <if test="scopeofuse != null" >
+        #{scopeofuse,jdbcType=CHAR},
+      </if>
+      <if test="moveable != null" >
+        #{moveable,jdbcType=CHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=OTHER},
+      </if>
+      <if test="ownerOrg != null" >
+        #{ownerOrg,jdbcType=OTHER},
+      </if>
+      <if test="shareto != null" >
+        #{shareto,jdbcType=OTHER},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=OTHER},
+      </if>
+      <if test="createrTime != null" >
+        #{createrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="useState != null" >
+        #{useState,jdbcType=INTEGER},
+      </if>
+      <if test="closeState != null" >
+        #{closeState,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xoado.tools.bean.TblBoxesExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_boxes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_boxes
+    <set >
+      <if test="record.boxId != null" >
+        box_id = #{record.boxId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boxName != null" >
+        box_name = #{record.boxName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scopeofuse != null" >
+        scopeofuse = #{record.scopeofuse,jdbcType=CHAR},
+      </if>
+      <if test="record.moveable != null" >
+        moveable = #{record.moveable,jdbcType=CHAR},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=OTHER},
+      </if>
+      <if test="record.ownerOrg != null" >
+        owner_org = #{record.ownerOrg,jdbcType=OTHER},
+      </if>
+      <if test="record.shareto != null" >
+        shareto = #{record.shareto,jdbcType=OTHER},
+      </if>
+      <if test="record.creater != null" >
+        creater = #{record.creater,jdbcType=OTHER},
+      </if>
+      <if test="record.createrTime != null" >
+        creater_time = #{record.createrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useState != null" >
+        use_state = #{record.useState,jdbcType=INTEGER},
+      </if>
+      <if test="record.closeState != null" >
+        close_state = #{record.closeState,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_boxes
+    set box_id = #{record.boxId,jdbcType=VARCHAR},
+      box_name = #{record.boxName,jdbcType=VARCHAR},
+      scopeofuse = #{record.scopeofuse,jdbcType=CHAR},
+      moveable = #{record.moveable,jdbcType=CHAR},
+      location = #{record.location,jdbcType=OTHER},
+      owner_org = #{record.ownerOrg,jdbcType=OTHER},
+      shareto = #{record.shareto,jdbcType=OTHER},
+      creater = #{record.creater,jdbcType=OTHER},
+      creater_time = #{record.createrTime,jdbcType=TIMESTAMP},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      use_state = #{record.useState,jdbcType=INTEGER},
+      close_state = #{record.closeState,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xoado.tools.bean.TblBoxes" >
+    update tbl_boxes
+    <set >
+      <if test="boxName != null" >
+        box_name = #{boxName,jdbcType=VARCHAR},
+      </if>
+      <if test="scopeofuse != null" >
+        scopeofuse = #{scopeofuse,jdbcType=CHAR},
+      </if>
+      <if test="moveable != null" >
+        moveable = #{moveable,jdbcType=CHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=OTHER},
+      </if>
+      <if test="ownerOrg != null" >
+        owner_org = #{ownerOrg,jdbcType=OTHER},
+      </if>
+      <if test="shareto != null" >
+        shareto = #{shareto,jdbcType=OTHER},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=OTHER},
+      </if>
+      <if test="createrTime != null" >
+        creater_time = #{createrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="useState != null" >
+        use_state = #{useState,jdbcType=INTEGER},
+      </if>
+      <if test="closeState != null" >
+        close_state = #{closeState,jdbcType=CHAR},
+      </if>
+    </set>
+    where box_id = #{boxId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xoado.tools.bean.TblBoxes" >
+    update tbl_boxes
+    set box_name = #{boxName,jdbcType=VARCHAR},
+      scopeofuse = #{scopeofuse,jdbcType=CHAR},
+      moveable = #{moveable,jdbcType=CHAR},
+      location = #{location,jdbcType=OTHER},
+      owner_org = #{ownerOrg,jdbcType=OTHER},
+      shareto = #{shareto,jdbcType=OTHER},
+      creater = #{creater,jdbcType=OTHER},
+      creater_time = #{createrTime,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      use_state = #{useState,jdbcType=INTEGER},
+      close_state = #{closeState,jdbcType=CHAR}
+    where box_id = #{boxId,jdbcType=VARCHAR}
+  </update>
+</mapper>

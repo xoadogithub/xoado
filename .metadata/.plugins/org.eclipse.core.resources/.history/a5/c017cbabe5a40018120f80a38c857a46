@@ -1,0 +1,16 @@
+package com.xoado.tools.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.xoado.common.XoadoResult;
+import com.xoado.tools.service.Iservice;
+@Service
+public class ImplServicce implements Iservice{
+
+	@Override
+	public XoadoResult test(String archiveid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

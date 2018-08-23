@@ -1,0 +1,274 @@
+ package com.xoado.FilingCabinet.service.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xoado.FilingCabinet.bean.TblArchives;
+import com.xoado.FilingCabinet.bean.TblArchivesExample;
+import com.xoado.FilingCabinet.bean.TblCurrentArchives;
+import com.xoado.FilingCabinet.bean.TblCurrentArchivesExample;
+import com.xoado.FilingCabinet.bean.TblCurrentArchivesExample.Criteria;
+import com.xoado.FilingCabinet.mapper.TblArchivesMapper;
+import com.xoado.FilingCabinet.mapper.TblCurrentArchivesMapper;
+import com.xoado.FilingCabinet.service.IArchives;
+
+import com.xoado.common.MD5;
+import com.xoado.common.XoadoFile;
+import com.xoado.common.XoadoResult;
+import com.xoado.protocol.AccessIdentity;
+import com.xoado.protocol.ArchivesStatus;
+import com.xoado.protocol.BaseRetCode;
+import com.xoado.protocol.XoadoConstant;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+
+
+
+/**
+* @author 作者
+* @version 创建时间：2018年8月2日 下午4:50:38
+* 类说明
+*/
+@Service
+public class Archives implements IArchives{
+	
+	@Autowired
+	private TblArchivesMapper archivesMapper;
+	@Autowired
+	private TblCurrentArchivesMapper tblCurrentArchivesMapper;
+	/**
+	 * 1,当前用户添加一项新资料到临时档案区
+	 * @param archiveName   档案名称
+	 * @param ownerOrgid   组织Id
+	 * @param ownerOrgname  组织名称
+	 * @param comments  备注
+	 * @param request
+	 * @return
+	 */
+	@Override
+	@Transactional
+	public XoadoResult insertArchives(String archive_Name, String owner_Orgid, String owner_Orgname, Object comments,
+			HttpServletRequest request) {
+
+		AccessIdentity token = (AccessIdentity) request.getSession().getServletContext().getAttribute(XoadoConstant.XOADOTOKEN);
+		String archives_Id = MD5.MD5Encode(UUID.randomUUID().toString());
+		TblArchives archives = TblArchives.addArchives(archives_Id, archive_Name, owner_Orgid, owner_Orgname, token.getUserId(), token.getUserName(), comments, new Date(), token.getUserId(), token.getUserName());
+		TblCurrentArchives tblCurrentArchives = TblCurrentArchives.addCurrentArchives(token.getUserId(), archives_Id);
+		
+		archivesMapper.insert(archives);
+		tblCurrentArchivesMapper.insert(tblCurrentArchives);
+
+		return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg(),archives_Id);
+	}
+	/**
+	 * 
+	 * @param Page  页数		null
+	 * @param Rows   行数	null
+	 * @param request
+	 * @return   2:返回当前用户所有临时资料区的资料信息【列表分页】
+	 */
+	@Override
+	public XoadoResult getarchives(Integer Page, Integer Rows, HttpServletRequest request) {
+	
+		
+		
+		AccessIdentity token = (AccessIdentity)request.getSession().getServletContext().getAttribute(XoadoConstant.XOADOTOKEN);
+		if(token==null){
+//			微信用户未注册
+			return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_ERROR_WEIXIN_USER_NOT_EXISTS.getRetCode()), BaseRetCode.CODE_ERROR_WEIXIN_USER_NOT_EXISTS.getRetMsg());
+		}
+		
+		PageHelper.startPage(Page, Rows);
+		List<LinkedHashMap<String,Object>> list = tblCurrentArchivesMapper.selectByExamplePage(token.getUserId());
+		PageInfo<LinkedHashMap<String,Object>> info = new PageInfo<>(list);	
+		return XoadoResult.build((Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode())),BaseRetCode.CODE_SUCCESS.getRetMsg(),info);
+		
+	}
+	/**
+	 * 3:指定资料放入准备交接区
+	 * @param archiveId   资料Id
+	 * @param request
+	 * @return	3:XoadoResult
+	 */
+	@Override
+	@Transactional
+	public XoadoResult Add_data_ready(String archiveId, HttpServletRequest request) {
+		TblCurrentArchivesExample example = new TblCurrentArchivesExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andArchiveIdEqualTo(archiveId);
+		List<TblCurrentArchives> list = tblCurrentArchivesMapper.selectByExample(example);
+		for (TblCurrentArchives tblCurrentArchives : list) {	
+			tblCurrentArchives.setStatus(ArchivesStatus.ready.toString());
+			tblCurrentArchivesMapper.updateByPrimaryKey(tblCurrentArchives);
+		}
+		return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg());
+	}
+	/**
+	 * 4:指定资料移除交接区
+	 * @param archiveId
+	 * @param request
+	 * @return   4: XoadoResult
+	 */
+	@Override
+	@Transactional
+	public XoadoResult Remove_data_ready(String archiveId, HttpServletRequest request) {
+		TblCurrentArchivesExample example = new TblCurrentArchivesExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andArchiveIdEqualTo(archiveId);
+		List<TblCurrentArchives> list = tblCurrentArchivesMapper.selectByExample(example);
+		for (TblCurrentArchives tblCurrentArchives : list) {	
+			tblCurrentArchives.setStatus(ArchivesStatus.temporary.toString());
+			tblCurrentArchivesMapper.updateByPrimaryKey(tblCurrentArchives);
+		}
+		return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg());
+	}
+	
+	/**
+	 * 6：返回指定资料的图片附件
+	 * @param archiveId
+	 * @param request
+	 * @return
+	 */
+	@Override
+	public XoadoResult appointImage(String archiveId, HttpServletRequest request) {
+		TblArchives key = archivesMapper.selectByPrimaryKey(archiveId);
+		Object AttachmentPicture = key.getAttachmentPicture();
+		return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg(),AttachmentPicture);
+
+	}
+	/**
+	 * 7:指定资料添加一个文档附件
+	 * @param archiveId   
+	 * @param attachmentDocument
+	 * @param request
+	 * @return
+	 */
+	@Override
+	public XoadoResult Add_Aoopint_Data_Doc(String archiveId, MultipartFile[] attachmentDocument,
+			HttpServletRequest request) {
+		
+		return null;
+	}
+	/**
+	 * 
+	 * @param archiveId
+	 * @param request
+	 * @return  返回指定资料的文档附件
+	 */
+	@Override
+	public XoadoResult appointDocument(String archiveId, HttpServletRequest request) {
+		TblArchives key = archivesMapper.selectByPrimaryKey(archiveId);
+		Object attachmentDocument = key.getAttachmentDocument();
+		return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg(),attachmentDocument);
+	}
+	/**
+	 * 指定资料添加图片附件
+	 */
+	@Override
+	public XoadoResult Add_Appoint_Data_Image(String archiveId, MultipartFile[] attachmentpicture,
+			HttpServletRequest request) {
+		TblArchives tblArchives = archivesMapper.selectByPrimaryKey(archiveId);	
+		System.out.println("tblArchives:"+tblArchives);
+		Object picture = tblArchives.getAttachmentPicture();
+		JSONArray array = JSONArray.fromObject(picture);
+		JSONObject jsonObject = new JSONObject();
+	
+		for (MultipartFile multipartFile : attachmentpicture) {
+			
+			Map<String, Object> map = XoadoFile.FileImageProcessing(multipartFile);
+			jsonObject.put("imageName",map.get("imageName"));
+			jsonObject.put("imageUrl",map.get("imageUrl"));
+			jsonObject.put("ZIPName",map.get("ZIPName"));
+			jsonObject.put("ZIPUrl",map.get("ZIPUrl"));
+			array.add(jsonObject);
+		}
+		System.out.println();
+		
+		tblArchives.setAttachmentPicture(array.toString());
+		archivesMapper.updateByPrimaryKey(tblArchives);
+		return XoadoResult.ok();
+
+	}
+	/**
+	 * 
+	 * @param archiveid
+	 * @param page
+	 * @param rows
+	 * @param request
+	 * @return 返回当前用户所有资料信息
+	 */
+	@Override
+	public XoadoResult allTheInformation(String archiveid, String page, String rows, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		AccessIdentity token = (AccessIdentity)request.getSession().getAttribute(XoadoConstant.XOADOTOKEN);
+		if(archiveid==null){
+			String sql =" SELECT a.archive_id,a.archive_name,a.owner_org,a.owner_user,a.comments,a.attachment_picture,a.attachment_document,b.holddate,b.holdfrom "
+					+ "FROM tbl_archives AS a,(SELECT * FROM tbl_current_archives AS c WHERE c.ownerid=\""+token.getUserId()+"\") AS b WHERE a.archive_id=b.archive_id";
+			List<LinkedHashMap<String,Object>> list2 = archivesMapper.selectTheCurrentUser(sql);
+			System.out.println(list2);
+				return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg(),list2);	
+		}
+		TblArchives tblArchives = archivesMapper.selectByPrimaryKey(archiveid);
+		JSONObject jsonObject = JSONObject.fromObject(tblArchives);
+		
+		TblCurrentArchivesExample example = new TblCurrentArchivesExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andArchiveIdEqualTo(archiveid);
+		List<TblCurrentArchives> list = tblCurrentArchivesMapper.selectByExample(example);
+		for (TblCurrentArchives tblCurrentArchives : list) {
+			String id =null;
+			if(tblCurrentArchives.getOwnertype().equals(ArchivesStatus.box.toString())){
+				id=tblCurrentArchives.getOwnerid();
+			}
+			jsonObject.put("id", id);
+			jsonObject.put("holddate",  new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss:SSS").format(tblCurrentArchives.getHolddate()));
+			jsonObject.put("holdfrom", tblCurrentArchives.getHoldfrom());	
+		}	
+		return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg(),jsonObject.toString());
+	}
+	/**
+	 * 
+	 * @param archiveid
+	 * @return 返回指定资料详情
+	 */
+	@Override
+	public XoadoResult SpecifiedInformation(String archiveid,HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		TblArchives archives = archivesMapper.selectByPrimaryKey(archiveid);
+		JSONObject object = JSONObject.fromObject(archives);
+		System.out.println("---"+object);
+		TblCurrentArchivesExample example = new TblCurrentArchivesExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andArchiveIdEqualTo(archiveid);
+		List<TblCurrentArchives> list = tblCurrentArchivesMapper.selectByExample(example);
+		JSONObject jsonObject = new JSONObject();
+		for (TblCurrentArchives tblCurrentArchives : list) {
+			jsonObject.put("id", tblCurrentArchives.getOwnerid());
+			jsonObject.put("type", tblCurrentArchives.getOwnertype());
+			object.put("holdfrom", tblCurrentArchives.getHoldfrom());
+			object.put("date", new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss:SSS").format(tblCurrentArchives.getHolddate()));
+			object.put("handoverid", tblCurrentArchives.getHandoverId());
+			object.put("where", jsonObject.toString());
+			object.put("num", tblCurrentArchives.getQuantity());
+		}
+		return XoadoResult.build(Integer.parseInt(BaseRetCode.CODE_SUCCESS.getRetCode()), BaseRetCode.CODE_SUCCESS.getRetMsg(),object.toString());
+	}
+	
+	
+}

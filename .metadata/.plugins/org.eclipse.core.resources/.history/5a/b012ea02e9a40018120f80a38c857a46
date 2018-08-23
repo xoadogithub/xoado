@@ -1,0 +1,15 @@
+package com.xoado.XDTools.serviceimpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.xoado.XDTools.mapper.TblArchivesMapper;
+
+@Service
+public class XDfileImpl {
+	
+	@Autowired
+	private TblArchivesMapperA tblArchivesMapper;
+	
+
+}

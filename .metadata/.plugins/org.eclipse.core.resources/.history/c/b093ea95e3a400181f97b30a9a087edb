@@ -1,0 +1,12 @@
+package com.xoado.tools.service;
+
+import org.springframework.stereotype.Repository;
+
+import com.xoado.common.XoadoResult;
+
+@Repository
+public interface IXoadoUploadA {
+	
+	XoadoResult uploadBase64(String archiveid,String base64text) throws Exception;
+
+}
